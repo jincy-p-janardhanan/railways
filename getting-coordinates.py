@@ -157,7 +157,7 @@ if elevations:
             continue
 
     m.save('mumbai_railways_elevation_heatmap_log.html')
-    print("\nElevation heatmap map saved as mumbai_railways_elevation_heatmap.html")
+    print("\nElevation heatmap map saved as mumbai_railways_elevation_heatmap1.html")
 
 else:
     print("\nCould not generate heatmap as no elevation data was available.")
