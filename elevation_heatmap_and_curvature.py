@@ -112,7 +112,7 @@ def parse_qgis_coords(coord_str):
     return coords_latlon
 
 try:
-    with open("curve.csv", "r", encoding="utf-8") as f:
+    with open("curve-updated.csv", "r", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         for row in reader:
             coord_str = row["Coordinates"]
