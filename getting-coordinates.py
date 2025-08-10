@@ -115,7 +115,7 @@ if elevations:
     log_max = np.log(max_elevation + offset)
     
     # Create a colormap that is linear on the log-transformed elevation data
-    colormap = cm.LinearColormap(colors=['blue', 'green', 'yellow', 'red'],
+    colormap = cm.LinearColormap(colors=['#4287f5', '#4a30db', 'orange', 'red'],
                                  index=[log_min, log_min + (log_max - log_min) * 0.3,
                                         log_min + (log_max - log_min) * 0.6, log_max],
                                  vmin=log_min, vmax=log_max)
@@ -156,8 +156,8 @@ if elevations:
             print(f"Skipping segment in way {way['id']} due to missing node {e}")
             continue
 
-    m.save('mumbai_railways_elevation_heatmap_log.html')
-    print("\nElevation heatmap map saved as mumbai_railways_elevation_heatmap1.html")
+    m.save('mumbai_railways_from_OSM.html')
+    print("\nMap saved as mumbai_railways_from_OSM.html")
 
 else:
     print("\nCould not generate heatmap as no elevation data was available.")
