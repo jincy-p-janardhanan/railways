@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mumbai Railways</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 15px;
+            line-height: 1.6;
+            color: #ddd;
+            background-color: #121212;
+        }
+
+        h1 {
+            text-align: center;
+            color: #61dafb;
+            font-size: 2.4rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            margin-bottom: 40px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        code {
+            display: block;
+            background: #1e1e1e;
+            color: #c5c8c6;
+            padding: 12px 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-size: 0.9em;
+            box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.05);
+            line-height: 1.4;
+            white-space: pre-wrap;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        a {
+            color: #61dafb;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            color: #21a1f1;
+        }
+
+        ul {
+            margin-top: 8px;
+            padding-left: 20px;
+        }
+
+        .section {
+            background: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+            padding: 20px 25px;
+            margin-bottom: 30px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .section:hover {
+            box-shadow: 0 6px 20px rgba(33, 161, 241, 0.5);
+        }
+
+        footer {
+            text-align: center;
+            margin: 40px 0 20px;
+            font-size: 0.9rem;
+            color: #888;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        footer a {
+            color: #61dafb;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+            color: #21a1f1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Mumbai Railways</h1>
+
+    <div class="section">
+        <p>
+            Extracted railway nodes from <b>OpenStreetMap</b> using the following query on the <strong>Overpass
+                API</strong>:
+        </p>
+        <code>
+[out:json][timeout:120];<br>
+(<br>
+&nbsp;&nbsp;relation["railway"="rail"]["name"~"Central|Western|Harbour",i]({min_lat},{min_lon},{max_lat},{max_lon});<br>
+&nbsp;&nbsp;way["railway"="rail"]["name"~"Central|Western|Harbour",i]({min_lat},{min_lon},{max_lat},{max_lon});<br>
+)<br>
+-&gt;.lines;<br>
+(<br>
+&nbsp;&nbsp;way(r.lines);<br>
+&nbsp;&nbsp;way.lines;<br>
+)<br>
+-&gt;.all_ways;<br>
+.all_ways out body;<br>
+&gt;;<br>
+out skel qt;
+    </code>
+    </div>
+
+    <div class="section">
+        <p>
+            Obtained <strong>594,914.280 m</strong> of railway lines from OSM (all lines combined).
+            Exported the data to GeoJSON format
+            (<a href="mumbai_railways.geojson" download>download</a>) and manually traced a total of
+            <strong>544,086.485 m</strong> of railway lines (all lines combined)
+            (<a href="mumbai_railways_updated.geojson" download>download updated</a>).
+        </p>
+        <p>
+            The new lines were added based on the following sources:
+        </p>
+        <ul>
+            <li><a href="https://st2.indiarailinfo.com/kjfdsuiemjvcya3/0/0/9/3/5052093/14/crcstmmumbaidivnmap20212513419.pdf"
+                    target="_blank">Central Railway Mumbai Division Map (PDF)</a></li>
+            <li><a href="https://wr.indianrailways.gov.in/cris/uploads/files/1393585983521-Div%20Map.pdf"
+                    target="_blank">Western Railway Division Map (PDF)</a></li>
+            <li><a href="https://elocos.railnet.gov.in/Maps/Systemmaps/WR.pdf" target="_blank">Western Railway System
+                    Map (PDF)</a></li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <p>
+            Fetched elevation data for all coordinates from the <strong>SRTM 90m</strong> dataset via the
+            <strong>OpenTopoData API</strong>.
+        </p>
+        <p>
+            Elevation heatmap (based on coordinates directly fetched from OSM) can be visualized
+            <a href="mumbai_railways_from_OSM.html" target="_blank">here</a>.
+        </p>
+        <p>
+            Updated GeoJSON file with elevation data for all coordinates can be downloaded
+            <a href="mumbai_railways_updated_with_elevations.geojson " download>here</a>.
+        </p>
+    </div>
+
+    <div class="section">
+        <p>
+            The GeoJSON file was imported into QGIS, where <strong>199 arcs</strong> were traced over the map to extract
+            angles of curvature.
+            The arc information, along with QGIS coordinates, is available
+            <a href="curve.csv">here</a>.
+        </p>
+        <p>
+            These arcs were plotted on the elevation heatmap:
+            <a href="mumbai_railways_with_curves.html" target="_blank">here</a>.
+        </p>
+    </div>
+    <footer>
+        <p>
+            <a href="https://github.com/jincy-p-janardhanan/" target="_blank" rel="noopener noreferrer">
+                Jincy P Janardhanan
+            </a> |
+            <a href="https://github.com/jincy-p-janardhanan/railways" target="_blank" rel="noopener noreferrer">
+                Go the repo
+            </a>
+        </p>
+    </footer>
+</body>
+
+</html>
