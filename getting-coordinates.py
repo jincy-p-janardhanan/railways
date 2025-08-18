@@ -79,7 +79,7 @@ for batch in chunk_list(locations, batch_size):
     i += 1
     time.sleep(0.5)
 
-# Add elevation data to our nodes
+# Add elevation data to nodes
 elevation_map = {
     (r['location']['lat'], r['location']['lng']): r.get('elevation')
     for r in elevation_results
@@ -106,8 +106,6 @@ if elevations:
     min_elevation = min(elevations)
     max_elevation = max(elevations)
 
-    # To handle log(0) or log(negative), we shift all values to be positive.
-    # The offset ensures the minimum elevation value becomes 1.
     offset = -min_elevation + 1 if min_elevation <= 0 else 0
 
     # Calculate the log-transformed range for the colormap

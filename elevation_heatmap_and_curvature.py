@@ -85,7 +85,7 @@ if elevations:
                     color = colormap(log_avg)
 
                     coords = [(node1['lat'], node1['lon']), (node2['lat'], node2['lon'])]
-                    folium.PolyLine(coords, color=color, weight=5, opacity=0.8).add_to(m)
+                    folium.PolyLine(coords, color=color, weight=5, opacity=0.8, popup=f"<div style='font-size:14px;'><b>Elevation:</b> {avg_elevation:.2f}m</div>").add_to(m)
 
         except KeyError as e:
             print(f"Skipping segment in way {way['id']} due to missing node {e}")
@@ -119,15 +119,22 @@ try:
             curve_coords = parse_qgis_coords(coord_str)
             if len(curve_coords) > 1:
                 arc_length = row.get('Arc Length (m)', 'N/A')
+                radius = row.get('Radius (m)', 'N/A')
                 angle = row.get('Angle (deg)', 'N/A')
 
                 if arc_length != 'N/A':
-                    arc_length = f"{float(arc_length):.2f}"  # 2 decimal places
+                    arc_length = f"{float(arc_length):.2f}"  
+                if radius != 'N/A':
+                    radius = f"{float(radius):.2f}"
                 if angle != 'N/A':
                     angle = f"{float(angle):.2f}"
 
-                tooltip_text = f"Arc Length: {arc_length} m\nangle: {angle}°"
-                popup_text = f"<div style='font-size:14px;'><b>Arc Length:</b> {arc_length}m<br><b>Angle:</b> {angle}°</div>"
+                tooltip_text = f"Arc Length: {arc_length} m\nRadius: {radius} m\nAngle: {angle}°"
+                popup_text = f"""<div style='font-size:14px;'>
+                                    <b>Arc Length:</b> {arc_length}m<br>
+                                    <b>Radius:</b> {radius}m<br>
+                                    <b>Angle:</b> {angle}°
+                                    </div>"""
 
                 folium.PolyLine(
                     locations=curve_coords,
@@ -155,3 +162,4 @@ except FileNotFoundError:
 # -------------------------
 m.save('mumbai_railways_with_curves.html')
 print("Map saved as mumbai_railways_with_curves.html")
+# verify on https://indiarailinfo.com/station/map/mumbai-csm-terminus-csmt/12282#st
