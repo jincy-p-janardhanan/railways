@@ -1,21 +1,38 @@
 body {
     font-family: "Inter", sans-serif;
-    font-size: 16.5px; /* slightly larger */
+    font-size: 16.5px;
+    /* slightly larger */
     line-height: 1.65;
 
     background: #f3f0fc;
-    color: #1f2937;
+    color: #2a1f37;
     margin: 0;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     font-family: "Manrope", sans-serif;
+}
+
+a {
+    color: #6e3ec8; 
+}
+
+a:active {
+    color: #783597; /* darker shade */
+}
+
+/* after it has been visited */
+a:visited {
+    color: #391f6b; /* slightly darker than base */
 }
 
 /* HEADER */
 header {
     position: sticky;
     top: 0;
+    z-index: 100;
 
     background: #382775;
     color: white;
@@ -23,9 +40,9 @@ header {
     padding: 20px 16px;
     text-align: center;
 
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
-    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.25);
+    box-shadow: 0 4px 20px rgba(156, 37, 235, 0.25);
 }
 
 header::after {
@@ -36,24 +53,11 @@ header::after {
     bottom: -10px;
     height: 20px;
 
-    background: radial-gradient(
-        ellipse at center,
-        rgba(37, 99, 235, 0.25),
-        transparent 70%
-    );
+    background: radial-gradient(ellipse at center,
+            rgba(139, 37, 235, 0.25),
+            transparent 70%);
 
     pointer-events: none;
-}
-
-nav a {
-    margin: 0 12px;
-    color: #2563eb;
-    font-weight: 500;
-    text-decoration: none;
-}
-
-nav a:hover {
-    text-decoration: underline;
 }
 
 /* TYPOGRAPHY */
@@ -63,7 +67,7 @@ h1 {
 }
 
 h2 {
-    color: #111827;
+    color: #1f1027;
     margin-bottom: 15px;
     border-left: 4px solid #54386b;
     padding-left: 10px;
@@ -89,30 +93,6 @@ h2 {
     gap: 12px;
 }
 
-/* BUTTONS */
-.btn {
-    padding: 10px 16px;
-    border-radius: 6px;
-    background: #e5e7eb;
-    color: #111827;
-    text-decoration: none;
-    font-weight: 500;
-    transition: all 0.2s ease;
-}
-
-.btn:hover {
-    background: #d1d5db;
-}
-
-.btn.primary {
-    background: #2563eb;
-    color: white;
-}
-
-.btn.primary:hover {
-    background: #1d4ed8;
-}
-
 /* CARDS */
 .card-container {
     display: flex;
@@ -131,7 +111,7 @@ h2 {
 }
 
 .card:hover {
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
 .card h3 {
@@ -139,7 +119,7 @@ h2 {
 }
 
 .card a {
-    color: #2563eb;
+    color: #7125eb;
     font-weight: 500;
 }
 
@@ -151,8 +131,8 @@ ul {
 /* CODE BLOCK */
 code {
     display: block;
-    background: #111827;
-    color: #e5e7eb;
+    background: #140b1a;
+    color: #e7e5eb;
     padding: 12px;
     border-radius: 6px;
     overflow-x: auto;
@@ -161,8 +141,9 @@ code {
 
 /* ACCORDION */
 .accordion-btn {
-        font-family: "Inter", sans-serif;
-    font-size: 15px; /* slightly larger */
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    color: #1e1127;
     width: 100%;
     text-align: left;
     padding: 12px;
@@ -204,7 +185,7 @@ footer {
 .subtitle {
     margin-top: 6px;
     font-size: 0.95rem;
-    color: rgba(255,255,255,0.85);
+    color: rgba(255, 255, 255, 0.85);
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
@@ -213,15 +194,16 @@ footer {
 /* GRID (replaces metrics) */
 .action-grid {
     display: flex;
-    justify-content: center; /* better than space-between */
+    justify-content: center;
     flex-wrap: wrap;
     max-width: 1000px;
     margin: 40px auto;
-    gap: 30px; /* 🔥 THIS is what you were missing */
+    gap: 30px;
+    
 }
 
 .action-card {
-    flex: 1 1 250px; /* flexible but controlled width */
+    flex: 1 1 250px;
     max-width: 320px;
 
     background: white;
@@ -233,42 +215,45 @@ footer {
     color: inherit;
 
     transition: all 0.25s ease;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
+
 .action-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
 }
 
 /* PRIMARY CARD (MAP) */
 .action-card.primary {
-    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    background: linear-gradient(135deg, #7125eb, #5e1dd8);
     color: white;
     border: none;
 }
 
 .action-card.primary p {
-    color: rgba(255,255,255,0.85);
+    color: rgba(255, 255, 255, 0.85);
 }
 
 /* TITLE */
 .action-card h3 {
     margin: 0;
     font-size: 1.2rem;
-    color: #111827;
+    color: #1e1127;
 }
 
 /* DESCRIPTION */
 .action-card p {
     margin-top: 6px;
     font-size: 0.9rem;
-    color: #6b7280;
+    color: #6c6375;
 }
 
 .action-card::after {
     content: "→";
     float: right;
-    color: #9ca3af;
+    font-size: 1.8rem;
+    color: #93809c;
+    line-height: 1;
 }
 
 .icon {
@@ -290,7 +275,7 @@ footer {
     border-radius: 12px;
     overflow: hidden;
     border: 1px solid #e5e7eb;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
 .map-preview iframe {
@@ -307,7 +292,7 @@ footer {
 }
 
 .preview-overlay a {
-    background: rgba(0,0,0,0.6);
+    background: rgba(0, 0, 0, 0.6);
     color: white;
     padding: 6px 12px;
     border-radius: 6px;
@@ -329,7 +314,7 @@ footer {
     border: 1px solid #e5e7eb;
 }
 
-/* HEADER */
+/* TABLE HEADER */
 .styled-table thead {
     background: #382775;
     color: white;
@@ -388,13 +373,13 @@ footer {
     margin-top: 20px;
     padding: 4px 8px;
 
-        background: #382775;
+    background: #382775;
     border-top: 1px solid #ddd6fe;
 
     text-align: center;
     color: #6b7280;
 
-    line-height: 1.2; /* 🔥 reduces vertical space */
+    line-height: 1.2;
 }
 
 /* REMOVE DEFAULT P MARGINS */
@@ -406,8 +391,8 @@ footer p {
 .footer-links {
     display: inline-flex;
     align-items: center;
-    gap: 8px; /* slightly tighter */
-    flex-wrap: nowrap; /* 🔥 prevents extra height from wrapping */
+    gap: 8px;
+    flex-wrap: nowrap;
 }
 
 /* LINKS */
@@ -419,9 +404,8 @@ footer p {
     text-decoration: none;
     color: white;
     font-weight: 500;
-    font-size: 0.85rem; /* slightly smaller */
-
-    line-height: 3; /* 🔥 critical */
+    font-size: 0.85rem;
+    line-height: 3;
 }
 
 /* ICONS */
@@ -432,7 +416,7 @@ footer p {
 
 /* DIVIDER */
 .divider {
-    color: #c4b5fd;
+    color: #e0b5fd;
     font-size: 0.8rem;
 }
 
