@@ -44,7 +44,7 @@ all_lons = [n["lon"] for n in nodes.values()]
 center_lat = (min(all_lats) + max(all_lats)) / 2
 center_lon = (min(all_lons) + max(all_lons)) / 2
 
-m = folium.Map(location=[center_lat, center_lon], zoom_start=11, tiles='cartodbpositron')
+m = folium.Map(location=[center_lat, center_lon], zoom_start=10, tiles='cartodbpositron')
 
 # -------------------------
 # Elevation colormap

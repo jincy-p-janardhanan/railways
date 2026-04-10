@@ -1,180 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mumbai Railways</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 0 15px;
-            line-height: 1.6;
-            color: #ddd;
-            background-color: #121212;
-        }
-
-        h1 {
-            text-align: center;
-            color: #61dafb;
-            font-size: 2.4rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            margin-bottom: 40px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        code {
-            display: block;
-            background: #1e1e1e;
-            color: #c5c8c6;
-            padding: 12px 15px;
-            border-radius: 6px;
-            overflow-x: auto;
-            font-size: 0.9em;
-            box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.05);
-            line-height: 1.4;
-            white-space: pre-wrap;
-            font-family: 'Courier New', Courier, monospace;
-        }
-
-        a {
-            color: #61dafb;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        a:hover {
-            text-decoration: underline;
-            color: #21a1f1;
-        }
-
-        ul {
-            margin-top: 8px;
-            padding-left: 20px;
-        }
-
-        .section {
-            background: #1e1e1e;
-            border: 1px solid #333;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
-            padding: 20px 25px;
-            margin-bottom: 30px;
-            transition: box-shadow 0.3s ease;
-        }
-
-        .section:hover {
-            box-shadow: 0 6px 20px rgba(33, 161, 241, 0.5);
-        }
-
-        footer {
-            text-align: center;
-            margin: 40px 0 20px;
-            font-size: 0.9rem;
-            color: #888;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        footer a {
-            color: #61dafb;
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-            color: #21a1f1;
-        }
-    </style>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <title>Mumbai Railways: Analysis</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-    <h1>Mumbai Railways</h1>
+<header>
+    <h1>Mumbai Railways: Analysis</h1>
+    <p class="subtitle">Elevation & Curvature Analysis of Mumbai Suburban Rail Network</p>
+</header>
+<section class="section">
+    <h2>Elevation Heatmap with Curve Overlay over Mumbai Railway Network</h2>
 
-    <div class="section">
-        <p>
-            Extracted railway nodes from <b>OpenStreetMap</b> using the following query on the <strong>Overpass
-                API</strong>:
-        </p>
-        <code>
-[out:json][timeout:120];<br>
-(<br>
-&nbsp;&nbsp;relation["railway"="rail"]["name"~"Central|Western|Harbour",i]({min_lat},{min_lon},{max_lat},{max_lon});<br>
-&nbsp;&nbsp;way["railway"="rail"]["name"~"Central|Western|Harbour",i]({min_lat},{min_lon},{max_lat},{max_lon});<br>
-)<br>
--&gt;.lines;<br>
-(<br>
-&nbsp;&nbsp;way(r.lines);<br>
-&nbsp;&nbsp;way.lines;<br>
-)<br>
--&gt;.all_ways;<br>
-.all_ways out body;<br>
-&gt;;<br>
-out skel qt;
-    </code>
-    </div>
+    <div class="map-preview">
+        <iframe src="mumbai_railways_with_curves.html"></iframe>
 
-    <div class="section">
-        <p>
-            Obtained <strong>594,914.280 m</strong> of railway lines from OSM (all lines combined).
-            Exported the data to GeoJSON format
-            (<a href="mumbai_railways.geojson" download>download</a>) and manually traced a total of
-            <strong>544,086.485 m</strong> of railway lines (all lines combined)
-            (<a href="mumbai_railways_updated.geojson" download>download updated</a>).
-        </p>
-        <p>
-            The new lines were added based on the following sources:
-        </p>
-        <ul>
-            <li><a href="https://st2.indiarailinfo.com/kjfdsuiemjvcya3/0/0/9/3/5052093/14/crcstmmumbaidivnmap20212513419.pdf"
-                    target="_blank">Central Railway Mumbai Division Map (PDF)</a></li>
-            <li><a href="https://wr.indianrailways.gov.in/cris/uploads/files/1393585983521-Div%20Map.pdf"
-                    target="_blank">Western Railway Mumbai Division Map (PDF)</a></li>
-            <li><a href="https://elocos.railnet.gov.in/Maps/Systemmaps/WR.pdf" target="_blank">Western Railway System
-                    Map (PDF)</a></li>
-        </ul>
-    </div>
-
-    <div class="section">
-        <p>
-            Fetched elevation data for all coordinates from the <strong>SRTM 90m</strong> dataset via the
-            <strong>OpenTopoData API</strong>.
-        </p>
-        <p>
-            Elevation heatmap (based on coordinates directly fetched from OSM) can be visualized
-            <a href="mumbai_railways_from_OSM.html" target="_blank">here</a>.
-        </p>
-        <p>
-            Updated GeoJSON file with elevation data for all coordinates can be downloaded
-            <a href="mumbai_railways_updated_with_elevations.geojson " download>here</a>.
-        </p>
-    </div>
-
-    <div class="section">
-        <p>
-            The GeoJSON file was imported into QGIS, where <strong>199 arcs</strong> were traced over the map to extract
-            angles of curvature.
-            The arc information, along with QGIS coordinates, is available
-            <a href="curve-updated.csv">here</a>.
-        </p>
-        <p>
-            These arcs were plotted on the elevation heatmap:
-            <a href="mumbai_railways_with_curves.html" target="_blank">here</a>.
-        </p>
-    </div>
-    <footer>
-        <p>
-            <a href="https://github.com/jincy-p-janardhanan/" target="_blank" rel="noopener noreferrer">
-                Jincy P Janardhanan
-            </a> |
-            <a href="https://github.com/jincy-p-janardhanan/railways" target="_blank" rel="noopener noreferrer">
-                Go the repo
+        <div class="preview-overlay">
+            <a href="mumbai_railways_with_curves.html" target="_blank">
+                Open in New Tab →
             </a>
-        </p>
-    </footer>
-</body>
+        </div>
+    </div>
+</section>
 
+<section class="section">
+    <h2>Curvature Analysis Summary</h2>
+
+    <div class="table-container">
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>Range</th>
+                    <th>Central</th>
+                    <th>Western</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <!-- Radius -->
+                <tr class="group-row">
+                    <td rowspan="2" class="metric-col">Radius (m)</td>
+                    <td class="range-col">&lt; 350</td>
+                    <td class="central-col">3</td>
+                    <td class="western-col">0</td>
+                </tr>
+                <tr>
+                    <td class="range-col">350 - 1000</td>
+                    <td class="central-col highlight">68</td>
+                    <td class="western-col">0</td>
+                </tr>
+
+                <!-- Ratio -->
+                <tr class="group-row">
+                    <td rowspan="3" class="metric-col">Radius - Length Ratio</td>
+                    <td class="range-col">&gt; 1.5</td>
+                    <td class="central-col">27</td>
+                    <td class="western-col">0</td>
+                </tr>
+                <tr>
+                    <td class="range-col">0.5 - 1.5</td>
+                    <td class="central-col">119</td>
+                    <td class="western-col">13</td>
+                </tr>
+                <tr>
+                    <td class="range-col">0.1 - 0.5</td>
+                    <td class="central-col">36</td>
+                    <td class="western-col">4</td>
+                </tr>
+
+                <!-- Deflection -->
+                <tr class="group-row">
+                    <td rowspan="4" class="metric-col">Rate of Deflection (deg)</td>
+                    <td class="range-col">&gt; 0.15</td>
+                    <td class="central-col">5</td>
+                    <td class="western-col">0</td>
+                </tr>
+                <tr>
+                    <td class="range-col">0.06 - 0.15</td>
+                    <td class="central-col highlight">71</td>
+                    <td class="western-col">1</td>
+                </tr>
+                <tr>
+                    <td class="range-col">0.02 - 0.06</td>
+                    <td class="central-col highlight">101</td>
+                    <td class="western-col">8</td>
+                </tr>
+                <tr>
+                    <td class="range-col">&lt; 0.02</td>
+                    <td class="central-col highlight">5</td>
+                    <td class="western-col">8</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="section">
+    <h2>About</h2>
+
+    <p>
+        Railway geometries were extracted from <b>OpenStreetMap</b> using the Overpass API,
+        covering Central, Western, and Harbour lines. The dataset was refined through
+        manual tracing of 544 km of railway lines, to correct missing or inaccurate segments; resulting in a
+        finalized network of 1139 km.
+    </p>
+
+    <p>
+        Elevation values were obtained using the SRTM 90m dataset via OpenTopoData.
+        Curvature analysis was performed in QGIS by tracing 199 arcs across the
+        network, enabling combined visualization of terrain and track geometry.
+    </p>
+</section>
+
+<section class="section">
+    <h2>Datasets</h2>
+<div class="action-grid">
+    <a href="mumbai_railways_updated_with_elevations.geojson" download class="action-card">
+        <div class="icon"><i data-lucide="database"></i></div>
+        <h3>Download GeoJSON Data</h3>
+        <p>Mumbai railway network with elevation</p>
+    </a>
+
+    <a href="curve-updated.csv" class="action-card">
+        <div class="icon"><i data-lucide="activity"></i></div>
+        <h3>Download Arc Data</h3>
+        <p>Curve data traced on QGIS</p>
+    </a>
+</div>
+</section>
+
+<!-- APPENDIX -->
+<section class="section">
+     <h2>Appendix</h2>
+    <div class="accordion">
+        <button class="accordion-btn">OSM Extraction Query</button>
+        <div class="accordion-content">
+            <code>
+[out:json][timeout:120];
+
+(
+
+  relation["railway"="rail"]["name"~"Central|Western|Harbour",i]({min_lat},{min_lon},{max_lat},{max_lon});
+
+  way["railway"="rail"]["name"~"Central|Western|Harbour",i]({min_lat},{min_lon},{max_lat},{max_lon});
+
+)
+
+->.lines;
+
+(
+
+  way(r.lines);
+
+  way.lines;
+
+)
+
+->.all_ways;
+
+.all_ways out body;
+
+>;
+
+out skel qt;
+            </code>
+        </div>
+
+        <button class="accordion-btn">Downloads</button>
+        <div class="accordion-content">
+            <ul>
+                <li>
+                        <a href="mumbai_railways.geojson" download>Original OSM GeoJSON</a><br>
+                        <b>594,914.280 m</b> of railway network data obtained from OSM
+                </li>
+                <li><a href="mumbai_railways_updated.geojson" download>Final Railway Network GeoJSON</a><br>
+                        The orignal data from OSM was appended by manually tracing <b>544,086.485 m</b> of railway lines to obtain the final network spanning  1139 km.
+                </li>
+                <li><a href="curve-updated.csv" download>Download Arc Data</a><br>
+                        <b>199 arcs</b> were manually traced over the map to extract angles of curvature, using QGIS tool.
+                </li>
+            </ul>
+        </div>
+
+        <button class="accordion-btn">Reference Maps</button>
+        <div class="accordion-content">
+            <ul>
+                <li><a href="https://st2.indiarailinfo.com/kjfdsuiemjvcya3/0/0/9/3/5052093/14/crcstmmumbaidivnmap20212513419.pdf" target="_blank">Central Railway Mumbai Division Map</a></li>
+                <li><a href="https://wr.indianrailways.gov.in/cris/uploads/files/1393585983521-Div%20Map.pdf" target="_blank">Western Railway Mumbai Division Map</a></li>
+                <li><a href="https://elocos.railnet.gov.in/Maps/Systemmaps/WR.pdf" target="_blank">Western Railway System Map</a></li>
+            </ul>
+        </div>
+
+    </div>
+</section>
+
+<footer>
+    <p class="footer-links">
+        <a href="https://www.linkedin.com/in/jincy-p-janardhanan/" target="_blank">
+            <i data-lucide="user"></i>
+            Jincy P Janardhanan
+        </a>
+
+        <span class="divider">|</span>
+
+        <a href="https://github.com/jincy-p-janardhanan/railways" target="_blank">
+        <svg fill="#ffffff" width="6px" height="6px" viewBox="0 -0.5 25 25" xmlns="http://www.w3.org/2000/svg"><path d="m12.301 0h.093c2.242 0 4.34.613 6.137 1.68l-.055-.031c1.871 1.094 3.386 2.609 4.449 4.422l.031.058c1.04 1.769 1.654 3.896 1.654 6.166 0 5.406-3.483 10-8.327 11.658l-.087.026c-.063.02-.135.031-.209.031-.162 0-.312-.054-.433-.144l.002.001c-.128-.115-.208-.281-.208-.466 0-.005 0-.01 0-.014v.001q0-.048.008-1.226t.008-2.154c.007-.075.011-.161.011-.249 0-.792-.323-1.508-.844-2.025.618-.061 1.176-.163 1.718-.305l-.076.017c.573-.16 1.073-.373 1.537-.642l-.031.017c.508-.28.938-.636 1.292-1.058l.006-.007c.372-.476.663-1.036.84-1.645l.009-.035c.209-.683.329-1.468.329-2.281 0-.045 0-.091-.001-.136v.007c0-.022.001-.047.001-.072 0-1.248-.482-2.383-1.269-3.23l.003.003c.168-.44.265-.948.265-1.479 0-.649-.145-1.263-.404-1.814l.011.026c-.115-.022-.246-.035-.381-.035-.334 0-.649.078-.929.216l.012-.005c-.568.21-1.054.448-1.512.726l.038-.022-.609.384c-.922-.264-1.981-.416-3.075-.416s-2.153.152-3.157.436l.081-.02q-.256-.176-.681-.433c-.373-.214-.814-.421-1.272-.595l-.066-.022c-.293-.154-.64-.244-1.009-.244-.124 0-.246.01-.364.03l.013-.002c-.248.524-.393 1.139-.393 1.788 0 .531.097 1.04.275 1.509l-.01-.029c-.785.844-1.266 1.979-1.266 3.227 0 .025 0 .051.001.076v-.004c-.001.039-.001.084-.001.13 0 .809.12 1.591.344 2.327l-.015-.057c.189.643.476 1.202.85 1.693l-.009-.013c.354.435.782.793 1.267 1.062l.022.011c.432.252.933.465 1.46.614l.046.011c.466.125 1.024.227 1.595.284l.046.004c-.431.428-.718 1-.784 1.638l-.001.012c-.207.101-.448.183-.699.236l-.021.004c-.256.051-.549.08-.85.08-.022 0-.044 0-.066 0h.003c-.394-.008-.756-.136-1.055-.348l.006.004c-.371-.259-.671-.595-.881-.986l-.007-.015c-.198-.336-.459-.614-.768-.827l-.009-.006c-.225-.169-.49-.301-.776-.38l-.016-.004-.32-.048c-.023-.002-.05-.003-.077-.003-.14 0-.273.028-.394.077l.007-.003q-.128.072-.08.184c.039.086.087.16.145.225l-.001-.001c.061.072.13.135.205.19l.003.002.112.08c.283.148.516.354.693.603l.004.006c.191.237.359.505.494.792l.01.024.16.368c.135.402.38.738.7.981l.005.004c.3.234.662.402 1.057.478l.016.002c.33.064.714.104 1.106.112h.007c.045.002.097.002.15.002.261 0 .517-.021.767-.062l-.027.004.368-.064q0 .609.008 1.418t.008.873v.014c0 .185-.08.351-.208.466h-.001c-.119.089-.268.143-.431.143-.075 0-.147-.011-.214-.032l.005.001c-4.929-1.689-8.409-6.283-8.409-11.69 0-2.268.612-4.393 1.681-6.219l-.032.058c1.094-1.871 2.609-3.386 4.422-4.449l.058-.031c1.739-1.034 3.835-1.645 6.073-1.645h.098-.005zm-7.64 17.666q.048-.112-.112-.192-.16-.048-.208.032-.048.112.112.192.144.096.208-.032zm.497.545q.112-.08-.032-.256-.16-.144-.256-.048-.112.08.032.256.159.157.256.047zm.48.72q.144-.112 0-.304-.128-.208-.272-.096-.144.08 0 .288t.272.112zm.672.673q.128-.128-.064-.304-.192-.192-.32-.048-.144.128.064.304.192.192.32.044zm.913.4q.048-.176-.208-.256-.24-.064-.304.112t.208.24q.24.097.304-.096zm1.009.08q0-.208-.272-.176-.256 0-.256.176 0 .208.272.176.256.001.256-.175zm.929-.16q-.032-.176-.288-.144-.256.048-.224.24t.288.128.225-.224z"/></svg>
+    Visit Repo
+</a>
+    </p>
+</footer>
+
+<script src="script.js"></script>
+<script>
+  lucide.createIcons();
+</script>
+</body>
 </html>
