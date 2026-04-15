@@ -11,6 +11,22 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700&display=swap"
         rel="stylesheet">
+    <meta name="description"
+        content="Technical analysis of the Mumbai Suburban Rail Network featuring elevation heatmaps, curvature calculations, and GeoJSON datasets extracted from OpenStreetMap.">
+    <meta name="keywords"
+        content="Mumbai Railways, elevation analysis, railway curvature, QGIS, OpenStreetMap, suburban rail network, geospatial data">
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org/",
+            "@type": "Dataset",
+            "name": "Mumbai Suburban Railway Elevation and Curvature Data",
+            "description": "A refined dataset of 1139 km of Mumbai railway lines with elevation and curvature analysis.",
+            "creator": {
+                "@type": "Person",
+                "name": "Jincy P Janardhanan"
+            }
+        }
+</script>
 </head>
 
 <body>
@@ -185,7 +201,8 @@ out skel qt;
                         <a href="mumbai_railways.geojson" download target="_blank">Original OSM GeoJSON</a><br>
                         <b>594,914.280 m</b> of railway network data obtained from OSM
                     </li>
-                    <li><a href="mumbai_railways_updated_with_elevations.geojson" download target="_blank">Final Railway Network
+                    <li><a href="mumbai_railways_updated_with_elevations.geojson" download target="_blank">Final Railway
+                            Network
                             GeoJSON</a><br>
                         The orignal data from OSM was appended by manually tracing <b>544,086.485 m</b> of railway lines
                         to obtain the final network spanning <b>1139 km</b>.
